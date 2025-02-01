@@ -10,7 +10,7 @@ const swaggerOptions: Options = {
 			version: "1.0.0",
 		},
 	},
-	apis: ["./src/app.ts"], // Path to the API docs when routes are in app.ts
+	apis: ["./src/api/v1/routes/*.ts"], // Path to the API docs when routes are in app.ts
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
