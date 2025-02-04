@@ -1,4 +1,4 @@
-import { Branch } from '../interfaces/Branch';
+import { Branch } from '../interfaces/branch';
 
 let branches: Branch[] = []; // In-memory "database" for simplicity
 
@@ -87,4 +87,3 @@ export const deleteBranch = (id: number): boolean => {
   branches.splice(branchIndex, 1); // Remove the branch from the array
   return true; // Return true indicating the branch was successfully deleted
 };
-

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as branchService from '../services/branchService';
-import { Branch } from '../interfaces/Branch';
+import { Branch } from '../interfaces/branch';
 
 /**
  * Creates a new branch and responds with the created branch.
@@ -23,7 +23,7 @@ export const createBranch = async (req: Request, res: Response) => {
     const newBranch = await branchService.createBranch(branch); // Call the service to create a new branch
     res.status(201).json(newBranch); // Respond with the created branch
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if creation fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if creation fails
   }
 };
 
@@ -46,7 +46,7 @@ export const getAllBranches = async (req: Request, res: Response) => {
     const branches = await branchService.getAllBranches(); // Call the service to retrieve all branches
     res.status(200).json(branches); // Respond with the list of branches
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if fetching fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if fetching fails
   }
 };
 
@@ -71,11 +71,11 @@ export const getBranchById = async (req: Request, res: Response) => {
     const { id } = req.params; // Get the branch id from the request parameters
     const branch = await branchService.getBranchById(Number(id)); // Call the service to get the branch by id
     if (!branch) {
-      return res.status(404).json({ message: 'Branch not found' }); // If the branch is not found, respond with 404
+      res.status(404).json({ message: 'Branch not found' }); // If the branch is not found, respond with 404
     }
     res.status(200).json(branch); // Respond with the branch data if found
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if fetching fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if fetching fails
   }
 };
 
@@ -102,11 +102,11 @@ export const updateBranch = async (req: Request, res: Response) => {
     const updatedData = req.body; // Get the updated data from the request body
     const updatedBranch = await branchService.updateBranch(Number(id), updatedData); // Call the service to update the branch
     if (!updatedBranch) {
-      return res.status(404).json({ message: 'Branch not found' }); // If not found, respond with 404
+      res.status(404).json({ message: 'Branch not found' }); // If not found, respond with 404
     }
     res.status(200).json(updatedBranch); // Respond with the updated branch data
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if updating fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if updating fails
   }
 };
 
@@ -131,10 +131,10 @@ export const deleteBranch = async (req: Request, res: Response) => {
     const { id } = req.params; // Get the branch id from the request parameters
     const deleted = await branchService.deleteBranch(Number(id)); // Call the service to delete the branch
     if (!deleted) {
-      return res.status(404).json({ message: 'Branch not found' }); // If not found, respond with 404
+      res.status(404).json({ message: 'Branch not found' }); // If not found, respond with 404
     }
     res.status(200).json({ message: 'Branch deleted successfully' }); // Respond with success message
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if deletion fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if deletion fails
   }
 };

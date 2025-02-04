@@ -1,4 +1,4 @@
-import { Employee } from '../interfaces/Employee';
+import { Employee } from '../interfaces/employee';
 
 let employees: Employee[] = []; // In-memory "database" for the sake of simplicity
 
@@ -87,4 +87,3 @@ export const deleteEmployee = (id: number): boolean => {
   employees.splice(employeeIndex, 1); // Remove the employee from the array
   return true; // Return true indicating the employee was successfully deleted
 };
-
