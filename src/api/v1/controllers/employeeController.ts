@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as employeeService from '../services/employeeService';
-import { Employee } from '../interfaces/Employee';
+import { Employee } from '../interfaces/employee';
 
 /**
  * Creates a new employee and responds with the created employee.
@@ -17,13 +17,13 @@ import { Employee } from '../interfaces/Employee';
  * // req.body = { name: "John Doe", position: "Developer" }
  * // res.status(201).json({ id: 1, name: "John Doe", position: "Developer" })
  */
-export const createEmployee = async (req: Request, res: Response) => {
+export const createEmployee = async (req: Request, res: Response): Promise<void> => {
   try {
     const employee: Employee = req.body; // Get the employee data from the request body
     const newEmployee = await employeeService.createEmployee(employee); // Call service to create a new employee
     res.status(201).json(newEmployee); // Respond with the created employee
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if creation fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if creation fails
   }
 };
 
@@ -41,12 +41,12 @@ export const createEmployee = async (req: Request, res: Response) => {
  * // GET /employees
  * // res.status(200).json([{ id: 1, name: "John Doe", position: "Developer" }, ...])
  */
-export const getAllEmployees = async (req: Request, res: Response) => {
+export const getAllEmployees = async (req: Request, res: Response): Promise<void> => {
   try {
     const employees = await employeeService.getAllEmployees(); // Get the list of employees from the service
     res.status(200).json(employees); // Respond with the list of employees
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if fetching fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if fetching fails
   }
 };
 
@@ -66,16 +66,16 @@ export const getAllEmployees = async (req: Request, res: Response) => {
  * // res.status(200).json({ id: 1, name: "John Doe", position: "Developer" })
  * // If not found, res.status(404).json({ message: "Employee not found" })
  */
-export const getEmployeeById = async (req: Request, res: Response) => {
+export const getEmployeeById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params; // Get the employee id from the request parameters
     const employee = await employeeService.getEmployeeById(Number(id)); // Call service to get employee by id
     if (!employee) {
-      return res.status(404).json({ message: 'Employee not found' }); // If not found, respond with 404
+      res.status(404).json({ message: 'Employee not found' }); // If not found, respond with 404
     }
     res.status(200).json(employee); // Respond with the employee data if found
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if fetching fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if fetching fails
   }
 };
 
@@ -96,17 +96,17 @@ export const getEmployeeById = async (req: Request, res: Response) => {
  * // res.status(200).json({ id: 1, name: "John Doe", position: "Senior Developer" })
  * // If not found, res.status(404).json({ message: "Employee not found" })
  */
-export const updateEmployee = async (req: Request, res: Response) => {
+export const updateEmployee = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params; // Get the employee id from the request parameters
     const updatedData = req.body; // Get the updated data from the request body
     const updatedEmployee = await employeeService.updateEmployee(Number(id), updatedData); // Call service to update the employee
     if (!updatedEmployee) {
-      return res.status(404).json({ message: 'Employee not found' }); // If not found, respond with 404
+      res.status(404).json({ message: 'Employee not found' }); // If not found, respond with 404
     }
     res.status(200).json(updatedEmployee); // Respond with the updated employee data
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if updating fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if updating fails
   }
 };
 
@@ -126,16 +126,16 @@ export const updateEmployee = async (req: Request, res: Response) => {
  * // res.status(200).json({ message: "Employee deleted successfully" })
  * // If not found, res.status(404).json({ message: "Employee not found" })
  */
-export const deleteEmployee = async (req: Request, res: Response) => {
+export const deleteEmployee = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params; // Get the employee id from the request parameters
     const deleted = await employeeService.deleteEmployee(Number(id)); // Call service to delete the employee
     if (!deleted) {
-      return res.status(404).json({ message: 'Employee not found' }); // If not found, respond with 404
+      res.status(404).json({ message: 'Employee not found' }); // If not found, respond with 404
     }
     res.status(200).json({ message: 'Employee deleted successfully' }); // Respond with success message
   } catch (error) {
-    res.status(400).json({ message: error.message }); // Respond with error message if deletion fails
+    res.status(400).json({ message: (error as Error).message }); // Respond with error message if deletion fails
   }
 };
 

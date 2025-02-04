@@ -1,4 +1,4 @@
-import { Branch } from '../interfaces/Branch';
+import { Branch } from '../interfaces/branch';
 
 let branches: Branch[] = []; // In-memory "database" for simplicity
 

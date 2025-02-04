@@ -1,4 +1,4 @@
-import { Employee } from '../interfaces/Employee';
+import { Employee } from '../interfaces/employee';
 
 let employees: Employee[] = []; // In-memory "database" for the sake of simplicity
 
